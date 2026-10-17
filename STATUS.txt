@@ -45,3 +45,5 @@ Drag yt1.3: board-sized floating ghost, 44px touch clearance, grid snapping with
 2026-10-17 yt1.4: stronger line-clear beams, expanding ring, bounded 36–60 particles, combo/multi-clear title and score pulse. Reduced-motion skips particles/beams/ring. Production unchanged.
 
 2026-10-17 yt1.5: multi-line/combo-only rainbow sweep, halo, double shockwave, 32 firework stars and larger title/badge. Ordinary single-line unchanged. Clears replace previous effects to bound DOM. Reduced motion skips all moving decorations. Production unchanged.
+
+2026-10-17 yt1.6: applied exact official CSP response header in local QA. Reproduced blocked method=dialog submission; replaced form with explicit type=button and dialog.close, preserving confirm/cancel return values and host pause guard. Portal Unauthorized; user confirms not invited. No waitlist submission or agreements accepted.

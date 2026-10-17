@@ -63,6 +63,9 @@ function syncPause(){paused=userPaused||P.paused;clearDrag();$('paused').hidden=
 function setPaused(value){if(!started)return;userPaused=value;syncPause();if(!paused)msg('再開しました。次の一手をどうぞ。');}
 P.on((type)=>{if(type==='pause'||type==='resume'){syncPause();}if(type==='audio'&&!P.audioEnabled)S.stop();if(type==='save-error')msg('保存に失敗しました。次の操作で再試行します。');});
 $('pause').onclick=()=>setPaused(true);$('resume').onclick=()=>setPaused(false);if(!P.hosted)document.addEventListener('visibilitychange',()=>{if(document.hidden)setPaused(true);});
+// YouTube's sandbox omits allow-forms. Close dialogs without form submission.
+$('dialogOK').onclick=()=>{if(!P.paused)$('dialog').close('ok');};
+$('dialogCancel').onclick=()=>{if(!P.paused)$('dialog').close('cancel');};
 function modal(title,body,ok='OK',cancel=true,action=()=>{}){clearDrag();selected=null;render();$('dialogTitle').textContent=title;$('dialogBody').replaceChildren();if(typeof body==='string')$('dialogBody').textContent=body;else $('dialogBody').append(body);$('dialogOK').textContent=ok;$('dialogCancel').hidden=!cancel;$('dialog').returnValue='';$('dialog').onclose=()=>{if($('dialog').returnValue==='ok')action();};if(!$('dialog').open)$('dialog').showModal();}
 function gameover(){const content=document.createElement('div');content.textContent='置けるブロックがなくなりました。';const n=document.createElement('strong');n.textContent=state.score.toLocaleString();const p=document.createElement('p');p.textContent=`${state.lines} ライン消去 · 最大コンボ ${state.maxCombo}${mode==='daily'?' ／ 同じ日の再挑戦は同じブロック列です。':''}`;content.append(n,p);modal('NICE RUN!',content,'もう一度プレイ',true,()=>load(mode,true));}
 $('restart').onclick=()=>{if(!started||paused)return;modal('最初から始めますか？','現在の盤面はリセットされます。ベストスコアは残ります。','始める',true,()=>load(mode,true));};
