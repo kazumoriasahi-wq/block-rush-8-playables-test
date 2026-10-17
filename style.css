@@ -43,3 +43,6 @@ html,body{touch-action:pan-y pinch-zoom!important}
 @keyframes rainbow-sweep{0%{opacity:0;transform:translateX(-50%)}25%{opacity:1}100%{opacity:0;transform:translateX(50%)}}
 @keyframes mega-wave{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(2.5)}}
 @keyframes firework{0%{opacity:0;transform:scale(.2)}12%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--turn)) scale(.25)}}
+
+.language-row{text-align:right;margin-top:10px}.language-row button{background:transparent;color:#b6d6e5;font-size:11px;padding:8px;min-height:36px}.language-row:has(button[hidden]){display:none}
+@media(max-width:600px){footer{flex-wrap:wrap}footer button{flex:1 1 40%;padding-inline:4px}}
