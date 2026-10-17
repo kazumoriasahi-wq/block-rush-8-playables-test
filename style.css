@@ -18,3 +18,10 @@ html,body{touch-action:pan-y pinch-zoom!important}
  #message{margin:10px 0;min-height:19px}
  .piece{height:82px}
 }
+
+.drag-ghost{position:fixed;left:0;top:0;z-index:50;display:grid;pointer-events:none;will-change:transform;filter:drop-shadow(0 10px 10px #0007);transform-origin:center;opacity:.94}
+.drag-ghost i{display:block;border-radius:5px}
+.drag-ghost .tile{background:linear-gradient(145deg,color-mix(in srgb,var(--c),white 15%),var(--c));box-shadow:inset 0 2px 0 #ffffff70,inset 0 -3px 0 #0002}
+.drag-ghost.invalid{opacity:.58;filter:drop-shadow(0 0 5px #ff7198)}
+.piece.drag-source .mini{opacity:.18}
+.cell.preview{background:#91f3cc;box-shadow:inset 0 0 0 2px #ecfff8}
