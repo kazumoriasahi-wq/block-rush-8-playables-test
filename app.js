@@ -16,12 +16,21 @@ function render(){cells.forEach((c,i)=>{const x=i%8,y=Math.floor(i/8),color=stat
 function missions(){const goals=mode==='daily'?[['スコア',state.score,1500],['ライン',state.lines,6],['コンボ',state.maxCombo,3]]:[['配置',state.moves,12],['ライン',state.lines,4],['コンボ',state.maxCombo,2]];let done=0;$('missions').replaceChildren();goals.forEach(([name,n,target])=>{const ok=n>=target;if(ok)done++;const d=document.createElement('div');d.className='mission'+(ok?' done':'');const label=document.createElement('div');label.className='mission-label';const title=document.createElement('span');title.textContent=name;const count=document.createElement('b');count.textContent=ok?'✓':`${n}/${target}`;label.append(title,count);const track=document.createElement('div');track.className='track';track.setAttribute('role','progressbar');track.setAttribute('aria-label',name);track.setAttribute('aria-valuenow',Math.min(n,target));track.setAttribute('aria-valuemin',0);track.setAttribute('aria-valuemax',target);const fill=document.createElement('i');fill.style.width=Math.min(100,n/target*100)+'%';track.append(fill);d.append(label,track);$('missions').append(d);});$('missionCount').textContent=done+' / 3';}
 function preview(x,y){cells.forEach(c=>c.classList.remove('preview','bad','line-hint'));if(selected===null||busy||paused||state.over)return;const p=state.hand[selected],ok=E.valid(state,p,x,y);p.shape.forEach(([dx,dy])=>{const a=x+dx,b=y+dy;if(a>=0&&a<8&&b>=0&&b<8)cells[b*8+a].classList.add(ok?'preview':'bad');});if(ok){const filled=(a,b)=>!!state.board[b][a]||p.shape.some(([dx,dy])=>a===x+dx&&b===y+dy);for(let n=0;n<8;n++){if(Array.from({length:8},(_,a)=>filled(a,n)).every(Boolean))for(let a=0;a<8;a++)cells[n*8+a].classList.add('line-hint');if(Array.from({length:8},(_,b)=>filled(n,b)).every(Boolean))for(let b=0;b<8;b++)cells[b*8+n].classList.add('line-hint');}}}
 function burst(result){
- const layer=$('effects'),lines=result.rows.length+result.cols.length,power=Math.min(3,Math.max(lines,state.combo));
+ const layer=$('effects'),lines=result.rows.length+result.cols.length,power=Math.min(3,Math.max(lines,state.combo)),special=lines>1||state.combo>1;
+ // One celebration at a time, even when the player clears again quickly.
+ layer.replaceChildren();
  const add=(tag,cls,ms)=>{const n=document.createElement(tag);n.className=cls;layer.append(n);later(()=>n.remove(),ms);return n;};
  const title=state.combo>1?'COMBO ×'+state.combo:lines>1?'MULTI CLEAR!':'LINE CLEAR!';
- const e=add('div','burst clear-title power-'+power,1300);e.textContent=title;const s=document.createElement('small');s.textContent=lines+' LINE'+(lines>1?'S':'')+'  ·  +'+result.gain;e.append(s);
+ const e=add('div','burst clear-title power-'+power+(special?' mega-title':''),1300);e.textContent=title;const s=document.createElement('small');s.textContent=lines+' LINE'+(lines>1?'S':'')+'  ·  +'+result.gain;e.append(s);
  const score=$('score');score.classList.remove('score-pop');void score.offsetWidth;score.classList.add('score-pop');later(()=>score.classList.remove('score-pop'),650);
+ if(special){const badge=add('div','clear-badge',1250);badge.textContent=lines>1?(lines+'ライン同時消し！'):(state.combo>=4?'AMAZING!':'NICE COMBO!');}
  if(reduce)return;
+ if(special){
+  add('i','rainbow-halo',1200);add('i','rainbow-sweep',950);
+  for(let i=0;i<2;i++){const wave=add('i','mega-wave wave-'+i,1200);}
+  const rainbow=['#ff83b7','#ffd76e','#9affbf','#69eaff','#b59aff'];
+  for(let i=0;i<32;i++){const p=add('i','firework-star',1250),angle=i*Math.PI*2/32,distance=95+(i%3)*35;p.style.left=(i%2?30:70)+'%';p.style.top=(i%2?38:60)+'%';p.style.setProperty('--c',rainbow[i%5]);p.style.setProperty('--dx',Math.cos(angle)*distance+'px');p.style.setProperty('--dy',Math.sin(angle)*distance+'px');p.style.setProperty('--turn',(i%2?180:-180)+'deg');p.style.setProperty('--delay',(i%2)*.1+'s');}
+ }
  add('i','clear-aura power-'+power,900);
  const ring=add('i','clear-ring',900);ring.style.setProperty('--c',result.color);
  for(const [axis,list] of [['row',result.rows],['col',result.cols]])for(const n of list){const beam=add('i','clear-beam '+axis,650);beam.style.setProperty('--line',n);}

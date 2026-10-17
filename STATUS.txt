@@ -43,3 +43,5 @@ Audio yt1.2.1: await AudioContext resume before scheduling notes; cancel pending
 Drag yt1.3: board-sized floating ghost, 44px touch clearance, grid snapping with hysteresis, return animation for rejected/outside drops, stable pointer capture and cancellation cleanup. Rule/platform/audio/drag checks: 32 passed. Browser: valid drag 70->130, outside drop leaves 130, tap placement 130->160. iPhone actual touch feel pending user verification. Production unchanged.
 
 2026-10-17 yt1.4: stronger line-clear beams, expanding ring, bounded 36–60 particles, combo/multi-clear title and score pulse. Reduced-motion skips particles/beams/ring. Production unchanged.
+
+2026-10-17 yt1.5: multi-line/combo-only rainbow sweep, halo, double shockwave, 32 firework stars and larger title/badge. Ordinary single-line unchanged. Clears replace previous effects to bound DOM. Reduced motion skips all moving decorations. Production unchanged.
