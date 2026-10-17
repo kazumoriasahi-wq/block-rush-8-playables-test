@@ -1,0 +1,45 @@
+BLOCK RUSH 8 Playables integration alpha 1 — 2026-10-17 Asia/Tokyo
+
+LIVE dedicated test site:
+https://kazumoriasahi-wq.github.io/block-rush-8-playables-test/
+Mock lab (NOT official YouTube certification):
+https://kazumoriasahi-wq.github.io/block-rush-8-playables-test/sdk-lab.html
+Guide:
+https://kazumoriasahi-wq.github.io/block-rush-8-playables-test/GUIDE.html
+
+Dedicated repository:
+https://github.com/kazumoriasahi-wq/block-rush-8-playables-test
+Commit: 1813495de0ccd6f98dc82c5b9f722a54e58bcf12
+Deploy run 39028156067: completed successfully, 47 seconds.
+
+Production repository verified unchanged at:
+de8a8ba803a0c3f4c355025b75c87a9069263653
+Production remains https://kazumoriasahi-wq.github.io/block-rush-8/
+
+Implemented: SDK load before game code, readiness notifications, async cloud
+load/save adapter, serialized latest-state saves, retry without overwriting
+failed loads, SDK audio gating, SDK pause/resume, pausable animation timers,
+isolated browser fallback. Game rules unchanged.
+
+Checks: 9 rules + 12 adapter checks passed.
+Browser: ordinary placement +40 locally, mock placement +20 then +10,
+host pause/resume, mute callback, save failure/recovery, load failure/retry,
+restored 30-point session. Live deployed game placement +60 confirmed.
+Live deployed mock lab loaded and emitted frame/load/save/ready events.
+
+Build ZIP contains only 5 game files. Mock SDK is NEVER loaded by index.html.
+Source ZIP includes lab, tests and guides. No formal YouTube submission made.
+
+Pending: actual YouTube Test Suite/host environment, YouTube iPhone/Android
+device verification, official CSP header QA, language support/getLanguage,
+optional consistent best-score submission, full certification review.
+Official Test Suite page opened but exposed no runnable test controls in this
+environment. Developer portal eligibility/submission route remains unverified.
+
+Mobile scroll repair yt1.1: Override SDK body touch-action:none with pan-y pinch-zoom; allow board swipes and retain piece drag. Fit tray in small viewports. Browser checks: 375x667 tray bottom 658; 320x568 tray bottom 554. Selection/placement and scrolling to footer confirmed locally. Production unchanged.
+
+Audio yt1.2.1: await AudioContext resume before scheduling notes; cancel pending effects on pause/mute; start touch selection audio on pointerup; add sound-test button. Five audio regression tests passed. User reports intermittent sound even with silent mode off; actual iPhone listening confirmation remains pending.
+
+Drag yt1.3: board-sized floating ghost, 44px touch clearance, grid snapping with hysteresis, return animation for rejected/outside drops, stable pointer capture and cancellation cleanup. Rule/platform/audio/drag checks: 32 passed. Browser: valid drag 70->130, outside drop leaves 130, tap placement 130->160. iPhone actual touch feel pending user verification. Production unchanged.
+
+2026-10-17 yt1.4: stronger line-clear beams, expanding ring, bounded 36–60 particles, combo/multi-clear title and score pulse. Reduced-motion skips particles/beams/ring. Production unchanged.
